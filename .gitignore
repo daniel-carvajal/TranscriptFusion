@@ -1,0 +1,20 @@
+# Python basics
+__pycache__/
+*.pyc
+*.pyo
+
+# Your actual data files
+data/audio_clips/
+data/transcripts/
+logs/
+
+# Virtual environment (if you use one)
+venv/
+env/
+
+# Common editor files
+.vscode/
+.DS_Store
+
+# Temp files
+*.tmp
