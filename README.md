@@ -90,7 +90,7 @@ make install && make test-run
 
 2. **Fetch official transcript**:
    ```bash
-   python data-processing/fetch_official_transcript.py VIDEO_ID
+   python data-processing/fetch_youtube_transcript.py VIDEO_ID
    ```
 
 3. **Generate WhisperX transcript**:
@@ -112,7 +112,7 @@ TranscriptFusion/
 │   ├── cli.py                       # Global command-line interface
 │   └── core/
 │       ├── download_youtube_audio.py    # Download audio from YouTube
-│       ├── fetch_official_transcript.py # Get human transcripts
+│       ├── fetch_youtube_transcript.py # Get human transcripts
 │       ├── transcribe_with_whisperx.py  # Generate WhisperX transcripts
 │       └── enrich_transcript.py         # Main enrichment pipeline
 ├── data/

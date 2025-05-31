@@ -31,8 +31,8 @@ def fetch(video_id, output_dir):
     """Fetch official YouTube transcript"""
     click.echo(f"Fetching transcript for: {video_id}")
     # Import here to avoid startup errors
-    from transcriptfusion.core.fetch_official_transcript import fetch_human_transcript
-    fetch_human_transcript(video_id, output_dir)
+    from transcriptfusion.core.fetch_youtube_transcript import fetch_transcript
+    fetch_transcript(video_id, output_dir)
     click.echo("✅ Transcript fetched successfully!")
 
 @cli.command()
@@ -84,7 +84,7 @@ def full_pipeline(url, dev):
     try:
         # Import functions as needed
         from transcriptfusion.core.download_youtube_audio import download_audio
-        from transcriptfusion.core.fetch_official_transcript import fetch_human_transcript
+        from transcriptfusion.core.fetch_youtube_transcript import fetch_transcript
         from transcriptfusion.core.transcribe_with_whisperx import transcribe_audio
         from transcriptfusion.core.enrich_transcript import ArticuLoopTimingEnricher
         
@@ -94,9 +94,9 @@ def full_pipeline(url, dev):
         
         # Step 2: Fetch official transcript
         click.echo("\n2/4 Fetching official transcript...")
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        project_root = os.getcwd()
         output_dir = os.path.join(project_root, "data", "transcripts")
-        fetch_human_transcript(video_id, output_dir)
+        fetch_transcript(video_id, output_dir)
         
         # Step 3: Transcribe with WhisperX
         click.echo("\n3/4 Transcribing with WhisperX...")

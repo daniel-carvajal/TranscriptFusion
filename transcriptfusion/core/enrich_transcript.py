@@ -76,8 +76,7 @@ class ArticuLoopTimingEnricher:
     def __init__(self, project_root: str = None, dev_mode: bool = False, use_qwen: bool = True):
         if project_root is None:
             # Auto-detect project root from script location
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            self.project_root = os.path.abspath(os.path.join(script_dir, ".."))
+            self.project_root = os.getcwd()
         else:
             self.project_root = project_root
             

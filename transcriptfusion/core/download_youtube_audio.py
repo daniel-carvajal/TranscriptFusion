@@ -4,7 +4,7 @@ import os
 
 def download_audio(youtube_url: str, output_dir: str = None):
     # Resolve path relative to the script's parent directory (project root)
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    project_root = os.getcwd()
     if output_dir is None:
         output_dir = os.path.join(project_root, "data", "audio_clips")
 
