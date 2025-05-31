@@ -19,6 +19,7 @@ TranscriptFusion combines the accuracy of human-verified YouTube transcripts wit
 - **Contraction Handling**: Handles differences like "we're" vs "we 're" between sources
 - **Quality Metrics**: Detailed statistics and confidence scoring
 - **Debug Mode**: Comprehensive logging and diff reports for development
+- **Global CLI**: Install once, use anywhere with simple commands
 
 ## 🏗️ The Problem TranscriptFusion Solves
 
@@ -41,10 +42,46 @@ TranscriptFusion combines the accuracy of human-verified YouTube transcripts wit
 ```bash
 git clone https://github.com/yourusername/TranscriptFusion.git
 cd TranscriptFusion
-pip install -r requirements.txt
+pip install -e .
 ```
 
-### Basic Usage
+### Global Usage (Recommended)
+
+After installation, use TranscriptFusion from anywhere:
+
+```bash
+# Process any YouTube video in one command
+transcriptfusion full-pipeline https://youtube.com/watch?v=VIDEO_ID
+
+# Or run individual steps
+transcriptfusion download https://youtube.com/watch?v=VIDEO_ID
+transcriptfusion fetch VIDEO_ID
+transcriptfusion transcribe data/audio_clips/VIDEO_ID.mp3
+transcriptfusion enrich VIDEO_ID --dev
+```
+
+### Development Mode
+
+For detailed debugging and analysis:
+
+```bash
+transcriptfusion enrich VIDEO_ID --dev
+transcriptfusion full-pipeline https://youtube.com/watch?v=VIDEO_ID --dev
+```
+
+This generates comprehensive debug reports in the `logs/` directory.
+
+### Quick Test with Makefile
+
+```bash
+# Full setup and test
+make install && make global-test
+
+# Or using virtual environment
+make install && make test-run
+```
+
+### Manual Steps (if you prefer the old way)
 
 1. **Download YouTube audio**:
    ```bash
@@ -66,36 +103,25 @@ pip install -r requirements.txt
    python data-processing/enrich_transcript.py VIDEO_ID
    ```
 
-### Development Mode
-
-For detailed debugging and analysis:
-
-```bash
-python data-processing/enrich_transcript.py VIDEO_ID --dev
-```
-
-This generates comprehensive debug reports in the `logs/` directory.
-
-### Quick Test with Makefile
-
-```bash
-make setup && make install && make test-run
-```
-
 ## 📁 Project Structure
 
 ```
 TranscriptFusion/
-├── data-processing/
-│   ├── download_youtube_audio.py    # Download audio from YouTube
-│   ├── fetch_official_transcript.py # Get human transcripts
-│   ├── transcribe_with_whisperx.py  # Generate WhisperX transcripts
-│   └── enrich_transcript.py         # Main enrichment pipeline
+├── transcriptfusion/
+│   ├── __init__.py
+│   ├── cli.py                       # Global command-line interface
+│   └── core/
+│       ├── download_youtube_audio.py    # Download audio from YouTube
+│       ├── fetch_official_transcript.py # Get human transcripts
+│       ├── transcribe_with_whisperx.py  # Generate WhisperX transcripts
+│       └── enrich_transcript.py         # Main enrichment pipeline
 ├── data/
 │   ├── audio_clips/                 # Downloaded audio files
 │   └── transcripts/                 # All transcript files
 ├── logs/                           # Debug reports (dev mode)
+├── setup.py                        # Package installation
 ├── Makefile                        # Build and test automation
+├── README.md
 └── requirements.txt                # Python dependencies
 ```
 
@@ -123,6 +149,24 @@ The tool provides detailed statistics:
 - Confidence distribution
 - Segment alignment quality
 - Problematic word analysis
+
+## 🛠️ Available Commands
+
+After installing with `pip install -e .`, you can use these commands from anywhere:
+
+```bash
+transcriptfusion download <youtube_url>           # Download audio
+transcriptfusion fetch <video_id>                 # Get official transcript
+transcriptfusion transcribe <audio_file>          # Generate WhisperX transcript
+transcriptfusion enrich <video_id> [--dev]        # Enrich with word timing
+transcriptfusion full-pipeline <youtube_url> [--dev]  # Complete pipeline
+
+# Makefile shortcuts
+make global-test                                  # Quick test with default video
+make global-run VIDEO_ID=your_video_id          # Run pipeline
+make test-run                                    # Test using virtual environment
+make run VIDEO_ID=your_video_id                 # Run using virtual environment
+```
 
 ## 🚀 Next Steps
 

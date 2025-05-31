@@ -1,20 +1,39 @@
-# Python basics
+# Python package files
+build/
+dist/
+*.egg-info/
+transcriptfusion.egg-info/
+
+# Python cache and bytecode
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
 
-# Your actual data files
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Generated data files
 data/audio_clips/
 data/transcripts/
 logs/
 
-# Virtual environment (if you use one)
-venv/
-env/
-
-# Common editor files
+# IDE files
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
 .DS_Store
+Thumbs.db
 
 # Temp files
 *.tmp
+_context/
+
+data/
